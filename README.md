@@ -67,7 +67,7 @@ The model was additionally tested on 45 personal photographs beyond the ATR test
 - **Limitations**: 
   - Small accessory classes (Belt, Sunglasses, Scarf) frequently misclassified.
   - Clothing missed/misclassified when the subject occupies a small fraction of the frame.
-  - Segmentation degrades with 4-6+ people in frame.
+  - Segmentation degrades with 4-6+ people in frame which is expected, since the ATR training dataset consists exclusively of single-person images; the model was never exposed to multi-subject scenes during training.
   - Occasional misclassification on unusual camera angles (e.g. overhead shots).
 
 ### Sample Inference Output
