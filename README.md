@@ -19,6 +19,7 @@ Semantic segmentation (rather than instance segmentation) was chosen because the
 ## Dataset
 
 - **Source**: ATR dataset, loaded via HuggingFace (`mattmdjaga/human_parsing_dataset`), 17,706 image-mask pairs.
+- **Preprocessing:** Images resized to 256×256 (bilinear interpolation) and normalized with ImageNet mean/std; masks resized to 256×256 using nearest-neighbor interpolation to preserve discrete class labels.
 - **Split**: 80% train (14,166) / 10% val (1,770) / 10% test (1,770), fixed seed for reproducibility.
 - **Augmentation** (training only): random horizontal flip (50%), random brightness adjustment ±20% (50%).
 
