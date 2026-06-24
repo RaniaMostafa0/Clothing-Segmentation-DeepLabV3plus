@@ -70,7 +70,7 @@ The model was additionally tested on 45 personal photographs beyond the ATR test
   - Segmentation degrades with 4-6+ people in frame.
   - Occasional misclassification on unusual camera angles (e.g. overhead shots).
 
-markdown### Sample Inference Output
+### Sample Inference Output
 ![Inference example](results/inference_photo2.png)
 Sample inference outputs are in `results/inference_*.png`.
 
