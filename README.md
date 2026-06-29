@@ -1,6 +1,6 @@
-# Clothing-Segmentation-DeepLabV3plus
+# Clothing-Segmentation-DeepLabV3
 
-Semantic segmentation of clothing items from photographs of people, using DeepLabV3+ with a ResNet101 backbone, fine-tuned on a remapped subset of the ATR (Active Template Regression) dataset. Includes training, quantitative evaluation (IoU, pixel accuracy), a standalone inference pipeline, and an interactive Streamlit web app.
+Semantic segmentation of clothing items from photographs of people, using DeepLabV3 with a ResNet101 backbone, fine-tuned on a remapped subset of the ATR (Active Template Regression) dataset. Includes training, quantitative evaluation (IoU, pixel accuracy), a standalone inference pipeline, and an interactive Streamlit web app.
 
 ## Overview
 
@@ -12,7 +12,7 @@ Semantic segmentation (rather than instance segmentation) was chosen because the
 
 - **Backbone**: ResNet101 (ImageNet/COCO-pretrained), encoding 256×256 input down to a 16×16, 2048-channel feature map.
 - **ASPP (Atrous Spatial Pyramid Pooling)**: Parallel atrous convolutions at dilation rates 6, 12, 18, capturing multi-scale context without further downsampling.
-- **Decoder**: Upsamples ASPP output and fuses it with low-level ResNet features via a skip connection to recover spatial detail.
+- **Classifier head**:The ASPP features are passed through the DeepLabV3 classifier head, which predicts per-pixel logits for the 11 clothing classes. The prediction is then upsampled to the input image resolution.
 - **Output head**: Final classifier replaced to predict 11 classes instead of the original 21 COCO classes.
 - **Loss**: CrossEntropyLoss (standard for multiclass, mutually-exclusive pixel classification).
 
@@ -68,7 +68,7 @@ The model was additionally tested on 45 personal photographs beyond the ATR test
 - **Limitations**: 
   - Small accessory classes (Belt, Sunglasses, Scarf) frequently misclassified.
   - Clothing missed/misclassified when the subject occupies a small fraction of the frame.
-  - Segmentation degrades with 4-6+ people in frame which is expected, since the ATR training dataset consists exclusively of single-person images; the model was never exposed to multi-subject scenes during training.
+  - Segmentation degrades with 4-6+ people in frame which is expected, since the ATR training dataset consists of single-person images; the model was never exposed to multi-subject scenes during training.
   - Occasional misclassification on unusual camera angles (e.g. overhead shots).
 
 ### Sample Inference Output
@@ -77,7 +77,7 @@ Sample inference outputs are in `results/inference_*.png`.
 
 ## Project Structure
 
-- `model.py` — DeepLabV3+ model setup (ResNet101 backbone, modified classifier head)
+- `model.py` — DeepLabV3 model setup (ResNet101 backbone, modified classifier head)
 - `dataset.py` — Dataset loading, label remapping, augmentation, train/val/test split
 - `train.py` — Training/validation loop
 - `evaluate.py` — Test-set IoU and pixel accuracy computation, sample prediction visualization
